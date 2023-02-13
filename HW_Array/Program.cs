@@ -70,7 +70,7 @@ WriteLine ($"Sum of elements in Odd column in B: {_sumOddColB}");
 //B.CopyTo(Bcopy,0);
 #endif
 //TASK_2 Sum in array between min/max elements
-#if true
+#if false
 int[,] arr = new int[5,5];
 Random r = new Random();
 int _max= arr[0,0];
@@ -80,12 +80,12 @@ for (int i = 0; i < 5; i++)
 {
     for (int j=0; j < 5; j++)
     {
-    arr[i,j] = r.Next(-100, 100);
+    arr[i,j] = r.Next(-100, 100);//random significants
     }
 }
 int _minCol = 0; int _minRow = 0; int _maxCol = 0; int _maxRow = 0; //indexes of min max elements
 
-for (int i = 0; i < 5; i++)
+for (int i = 0; i < 5; i++)//find min max elements
 {
     for (int j=0; j < 5; j++)
     {
@@ -101,21 +101,6 @@ for (int i = 0; i < 5; i++)
         }
     }
 }
-
-//for (int i = 0; i < 5; i++)
-//{
-//    for(int j=0; j < 5; j++)
-//    {
-//        if (arr[i, j] == _min)
-//        {
-//            _minCol = j; _minRow = i;
-//        } 
-//        if (arr[i,j]==_max)
-//        {
-//            _maxCol = j; _maxRow = i;
-//        }
-//    }
-//}
 //WriteLine($"{ arr.Rank}, {arr.Length}"); 
 for (int i=0; i<5; i++)//Print arr
 {
@@ -166,9 +151,42 @@ for (int i = _minRow; i <= _maxRow; i++)//Sum between elements
         }
     }
 }
-
 WriteLine ($"Max significance is {_max}\t Min significance is {_min}");
 WriteLine($"Sum between Min and Max elements is: {sumBetweenMinMax}"); 
-
 //for (int i=0; i<25; i++)  Write(*(arr + i)); WHY NOT WORKING?
+#endif
+//TASK_3 Caesar cipher
+
+for (int i = 0; i < 256; i++) Write($"{i} - {(char)i}\t");//ASCII tab
+WriteLine("\nEnter a string: "); 
+String str =ReadLine();
+WriteLine("\nEnter a key for cipher: ");
+String Key = ReadLine(); int key = Convert.ToInt32(Key);
+if (key > 26) key = key % 26; 
+char [] strChar = str.ToCharArray();
+int []  strInt = new int [strChar.Length];
+    //Convert.ToInt32(strChar)
+for (int i = 0; i < strChar.Length; i++)
+{
+    strInt[i] = Convert.ToInt32(strChar[i]); 
+}
+for (int i = 0; i < strChar.Length; i++)
+{
+    if (strInt[i] < 65 || strInt[i] > 122 || strInt[i] > 90 && strInt[i] < 97) continue; 
+
+    if (strInt[i] > 65 && strInt[i]  < 90 && (strInt[i]+key)>90||
+        strInt[i] > 97 && strInt[i] < 122 && (strInt[i] + key) > 122)
+    {
+        strInt[i] = strInt[i]+key - 26;
+    }
+    else strInt[i] += key;
+}
+for (int i=0; i < strInt.Length; i++)
+{
+    strChar[i] = (char)strInt[i]; 
+}
+foreach (char c in strChar) Write($"{c}");
+
+#if true
+
 #endif
